@@ -52,7 +52,6 @@
         # 'project',
         'sale_management',
         'stock',
-        'backend_inmerzo'
     ],
     "data": [
         "security/planing_client_security.xml",

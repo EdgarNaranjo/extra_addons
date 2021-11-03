@@ -2,7 +2,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError, ValidationError
-import docker
+try:
+    import docker
+except ImportError:
+    raise ImportError('This module needs docker. Please install docker on your system. (pip install docker)')
 import xmlrpc.client as xmlrpclib
 import logging
 
