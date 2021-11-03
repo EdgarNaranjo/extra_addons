@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- View Form planing.client.product -->
+        <record model="ir.ui.view" id="planing_client_product_views_form">
+            <field name="name">planing.client.product.form</field>
+            <field name="model">planing.client.product</field>
+            <field name="arch" type="xml">
+                <form string="Planing Client">
+                    <header>
+                        <button name="prepared_in" string="Generate Plan" type="object" class="btn-primary" attrs="{'invisible':[('state','!=', 'draft')]}"/>
+                        <button name="create_sale_order" string="Generate Sale" type="object" class="btn-primary" attrs="{'invisible':[('state','!=', 'in')]}"/>
+                        <button name="prepared_done" string="Finish Plan" type="object" attrs="{'invisible':[('state','!=','in')]}"/>
+                        <button name="prepared_cancel" string="Canceled Plan" type="object" attrs="{'invisible':[('state', 'not in', ['in', 'done'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in,done,cancel"/>
+                    </header>
+                    <div class="alert alert-warning" role="alert" attrs="{'invisible': [('invoice_id', '=', False)]}">
+                      There are some bills related to this <span><span class="o_vat_label">Plan, </span></span> Ej: (<field name="invoice_id"/>). Do you want to cancel them too?
+                    </div>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object" class="oe_stat_button" icon="fa-cubes" name="action_view_instance">
+                                <field name="instances_count" widget="statinfo" string="Instances"/>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_invoice">
+                                <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-usd" name="action_view_sale">
+                                <field name="sale_order_count" widget="statinfo" string="Sales"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="Planing Name" readonly="True" required="True"/></h1>
+                        </div>
+                        <group>
+                            <group name="first_group">
+                                <field name="partner_id" required="True" domain="[('is_inmerzo', '=', True)]" options="{'no_create': True}"/>
+                                <field name="type_planing_id" options="{'no_create': True, 'no_open': True}" required="True" domain="[('state', '=', 'active')]"/>
+                                <field name="count_user" attrs="{'invisible':[('count_user','=', 0)]}"/>
+                                <field name="amount_user" readonly="True" widget='monetary' options="{'currency_field': 'currency_id'}" attrs="{'invisible':[('amount_user','=', 0)]}"/>
+                                <field name="amount_plan" invisible="True"/>
+                                <field name="currency_id" invisible="True"/>
+                            </group>
+                            <group name="second_group">
+                                <field name="create_date" string="Plan date" readonly="1"/>
+                                <field name="create_uid" string="Commercial" readonly="1"/>
+                                <field name="payment_term_id" options="{'no_open':True,'no_create': True}"/>
+                                <field name="discount" widget="percentage"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="General Data">
+                                <h3>Data Planing</h3>
+                                <field name="item_ids" readonly="True">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="modules_id" required="True" options="{'no_create': True, 'no_open': True}" domain="[('extra_addons', '=', False)]"/>
+                                        <field name="availability"/>
+                                        <field name="price" invisible="True"/>
+                                    </tree>
+                                </field>
+                                <h3>Other Modules</h3>
+                                <field name="module_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="modules_id" required="True" options="{'no_create': True, 'no_open': True}" domain="[('extra_addons', '=', True)]"/>
+                                        <field name="availability" invisible="True"/>
+                                        <field name="price" sum="TotalModule" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <field name="currency_id" invisible="True"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="amount_total">
+                                    <field name="amount_untaxed" readonly="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <field name="discount_amount" readonly="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="amount_total"/>
+                                    </div>
+                                    <field name="amount_total" readonly="1" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                            </page>
+                            <page string="Other packs">
+                            </page>
+                            <page string="Notes">
+                                <field name="notes" nolabel="True" placeholder="Notes..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- View Tree planing.client.product -->
+        <record model="ir.ui.view" id="planing_client_product_view_tree">
+            <field name="name">planing.client.product.tree</field>
+            <field name="model">planing.client.product</field>
+            <field name="arch" type="xml">
+                <tree string="Planing Client" decoration-muted = "state == 'cancel'" sample="1">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="type_planing_id"/>
+                    <field name="create_date" widget="remaining_days"/>
+                    <field name="create_uid" widget="many2one_avatar_user"/>
+                    <field name="write_uid" widget="many2one_avatar_user"/>
+                    <field name="amount_total" sum="TotalAmount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'in'" decoration-muted = "state == 'cancel'"/>
+                    <field name="currency_id" invisible="True"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- View Search planing.client.product -->
+        <record id="planing_client_product_view_search" model="ir.ui.view">
+          <field name="name">planing.client.product.search</field>
+          <field name="model">planing.client.product</field>
+          <field name="arch" type="xml">
+            <search string="Planing Client">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="create_uid"/>
+                <field name="write_uid"/>
+                <field name="state"/>
+                <separator/>
+                <filter string="New" domain="[('state', '=', 'draft')]" name="planing_new"/>
+                <filter string="In progress" domain="[('state', '=', 'in')]" name="planing_in"/>
+                <filter string="Finished" domain="[('state', '=', 'done')]" name="planing_done"/>
+                <filter string="Canceled" domain="[('state', '=', 'cancel')]" name="planing_cancel"/>
+            </search>
+          </field>
+        </record>
+
+        <record id="action_planing_client_product" model="ir.actions.act_window">
+            <field name="name">Planing Client</field>
+            <field name="res_model">planing.client.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('planing_client_product_view_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('planing_client_product_views_form')})]"/>
+            <field name="search_view_id" ref="planing_client_product_view_search"/>
+        </record>
+
+        <!-- Wizard View Form UFV Wizard-->
+<!--        <record model="ir.ui.view" id="ufv_wizard_form">-->
+<!--            <field name="name">UFV Wizard</field>-->
+<!--            <field name="model">ufv.wizard</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form>-->
+<!--                    <h4>Compruebe los <strong>UFV</strong> siguientes antes de confirmar la acción.</h4>-->
+<!--                    <hr></hr>-->
+<!--                    <field name="ufv_ids" readonly="1"/>-->
+<!--                    <footer>-->
+<!--                        <button type="object" name="set_non_active" string="Desactivar" class="oe_highlight"/>-->
+<!--                        <button special="cancel" string="Cancel"/>-->
+<!--                    </footer>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="action_view_ufv_wizard" model="ir.actions.act_window">-->
+<!--            <field name="name">Deactivate UFV</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="res_model">ufv.wizard</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="target">new</field>-->
+<!--            <field name="binding_model_id" ref="base_mediapro.model_report_ufv"/>-->
+<!--            <field name="binding_view_types">list</field>-->
+<!--            <field name="context">{'default_ufv_ids': active_ids}</field>-->
+<!--        </record>-->
+
+        <!-- Top menu item -->
+        <menuitem id='planing_client_menu_principal' name='Planing Client' sequence="10" groups="admin_planing_client_group,user_planing_client_group" web_icon="planing_client_inmerzo,static/description/icon.png">
+            <menuitem name="Planing Client" id="principal_planing_client_menu_item" groups="admin_planing_client_group,user_planing_client_group" sequence="1">
+                <menuitem name="Planing Client" id="principal_planing_client_menu_item_1" action="action_planing_client_product" sequence="1"/>
+            </menuitem>
+            <menuitem name="Instances" id="instance_client_menu_item" groups="admin_planing_client_group,user_planing_client_group" sequence="2">
+            </menuitem>
+            <menuitem name="Recurring Invoice" id="recurring_planing_client_menu_item" groups="admin_planing_client_group,user_planing_client_group" sequence="3">
+            </menuitem>
+
+            <menuitem name="Configuration" id="setting_planing_client_menu_item" groups="admin_planing_client_group" sequence="999">
+                <menuitem name="Settings" id="setting_planing_client_menu_item_999" action="action_planing_client_product" sequence="999"/>
+            </menuitem>
+        </menuitem>
+    </data>
+</odoo>

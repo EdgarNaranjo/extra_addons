@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="item_type_planing_tree">
+            <field name="name">item.type.planing.tree</field>
+            <field name="model">item.type.planing</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="modules_id" required="True"/>
+                    <field name="availability"/>
+                    <field name="price" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                    <field name="currency_id" invisible="True"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- View Form type.planing.client -->
+        <record model="ir.ui.view" id="type_planing_client_form">
+            <field name="name">type.planing.client.form</field>
+            <field name="model">type.planing.client</field>
+            <field name="arch" type="xml">
+                <form string="Type Planing">
+                    <header>
+                        <button name="do_active" string="To active" type="object" class="btn-primary" attrs="{'invisible':[('state','=','active')]}"/>
+                        <button name="do_inactive" string="To inactive" type="object" attrs="{'invisible':[('state','=','inactive')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="active,inactive"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="Type Planing" readonly="True" required="True"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="type_planing" required="True"/>
+                                <field name="optional_name"/>
+                            </group>
+                            <group>
+                                <field name="count_user" required="True"/>
+                                <field name="amount_user" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <group>
+                                <field name="currency_id" invisible="True"/>
+                                <field name="total_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Items Data">
+                                <field name="item_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="modules_id" required="True" options="{'no_create': True, 'no_open': True}" domain="[('extra_addons', '=', False)]"/>
+                                        <field name="availability"/>
+<!--                                        <field name="price" sum="Total"/>-->
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Other info">
+                                <group>
+                                    <group string="Sale">
+                                        <field name="product_id" required="True" options="{'no_create': True}" domain="[('recurring_ok', '=', True)]"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- View Tree type.planing.client -->
+        <record model="ir.ui.view" id="type_planing_client_tree">
+            <field name="name">type.planing.client.tree</field>
+            <field name="model">type.planing.client</field>
+            <field name="arch" type="xml">
+                <tree string="Type Planing" decoration-muted="state == 'inactive'" sample="1">
+                    <field name="name"/>
+                    <field name="type_planing"/>
+                    <field name="count_user"/>
+                    <field name="item_ids" widget="many2many_tags" string="Modules"/>
+                    <field name="total_amount" sum="Total" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                    <field name="state" widget="badge" decoration-info="state == 'active'" decoration-muted="state == 'inactive'"/>
+                    <field name="currency_id" invisible="True"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_type_planing_client" model="ir.actions.act_window">
+            <field name="name">Type Planing</field>
+            <field name="res_model">type.planing.client</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('type_planing_client_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('type_planing_client_form')})]"/>
+        </record>
+
+        <!-- View Form module.types -->
+        <record model="ir.ui.view" id="module_types_form">
+            <field name="name">module.types.form</field>
+            <field name="model">module.types</field>
+            <field name="arch" type="xml">
+                <form string="Module Types">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="Module Name" required="True"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="model_ids" widget="many2many_tags" required="True" options="{'no_create': True, 'no_open': True}" domain="[('state', 'not in', ['to remove'])]"/>
+                                <field name="extra_addons"/>
+                                <field name="parent_id" options="{'no_create': True, 'no_open': True}"/>
+                            </group>
+                            <group>
+                                <field name="currency_id" invisible="True"/>
+                                <field name="price" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- View Tree module.types -->
+        <record model="ir.ui.view" id="module_types_tree">
+            <field name="name">module.types.tree</field>
+            <field name="model">module.types</field>
+            <field name="arch" type="xml">
+                <tree string="Module Types">
+                    <field name="name"/>
+                    <field name="model_ids" widget="many2many_tags"/>
+                    <field name="price" sum="Total" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                    <field name="extra_addons"/>
+                    <field name="parent_id"/>
+                    <field name="currency_id" invisible="True"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_module_types" model="ir.actions.act_window">
+            <field name="name">Module Types</field>
+            <field name="res_model">module.types</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('module_types_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('module_types_form')})]"/>
+        </record>
+
+        <menuitem name="Type Planing" id="setting_planing_client_menu_item_1" parent="setting_planing_client_menu_item" action="action_type_planing_client" sequence="1"/>
+        <menuitem name="Module Types" id="setting_planing_client_menu_item_2" parent="setting_planing_client_menu_item" action="action_module_types" sequence="2"/>
+    </data>
+</odoo>

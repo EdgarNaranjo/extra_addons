@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="product_template_form_view_sale_order_button_inherit_inmerzo_view">
+            <field name="name">product.template.form.view.sale.order.button.inherit.inmerzo.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="sale.product_template_form_view_sale_order_button"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="recurring_ok" invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_product_template_form_view_sale_order_button_inmerzo_view">
+			<field name="name">Product</field>
+			<field name="res_model">product.product</field>
+			<field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'default_recurring_ok': True}</field>
+            <field name="domain">[('recurring_ok','=',True)]</field>
+		</record>
+
+        <menuitem id="recurring_planing_client_menu_item_999" name="Products" parent="recurring_planing_client_menu_item" action="action_product_template_form_view_sale_order_button_inmerzo_view" sequence="999"/>
+    </data>
+</odoo>
