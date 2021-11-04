@@ -30,7 +30,7 @@
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': "https://www.cybrosys.com",
-    "depends": ['base', 'web', 'mail', 'sale', 'account', 'sales_team', 'crm', 'sale_management', 'stock']
+    "depends": ['base', 'web', 'mail', 'sale', 'account', 'sales_team', 'crm', 'sale_management', 'stock'],
     "data": [
         'views/icons.xml',
         'views/layout.xml',
