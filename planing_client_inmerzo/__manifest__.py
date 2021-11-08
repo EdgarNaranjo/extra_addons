@@ -77,8 +77,8 @@
     "auto_install": False,
     "installable": True,
     "application": True,
-    "external_dependencies": {
-        'python': ['docker', 'requests'],
-    },
+    # "external_dependencies": {
+    #     'python': ['docker', 'requests'],
+    # },
 }
     

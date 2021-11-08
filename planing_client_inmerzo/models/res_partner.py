@@ -2,10 +2,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError, ValidationError
-try:
-    import docker
-except ImportError:
-    raise ImportError('This module needs docker. Please install docker on your system. (pip install docker)')
+# try:
+#     import docker
+# except ImportError:
+#     raise ImportError('This module needs docker. Please install docker on your system. (pip install docker)')
 import xmlrpc.client as xmlrpclib
 import logging
 
@@ -34,10 +34,10 @@ _logger = logging.getLogger(__name__)
 #     ########## ########## ########## ##########
 
 
-client = docker.from_env()
-list_container = []
-list_container = client.containers.list(all=True)
-print(list_container)
+# client = docker.from_env()
+# list_container = []
+# list_container = client.containers.list(all=True)
+# print(list_container)
 # client.containers.run("centos:7", name="Prueba1", tty=True, detach=True, stdin_open=True)
 
 
