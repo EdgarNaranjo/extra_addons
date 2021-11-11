@@ -106,5 +106,6 @@
     <record id="base.main_company" model="res.company">
         <field name="name">inmerzo</field>
         <field name="company_name_logo" type="base64" file="backend_inmerzo/static/src/img/logo.png"/>
+        <field name="favicon" type="base64" file="backend_inmerzo/static/src/img/favicon.ico"/>
     </record>
 </odoo>
