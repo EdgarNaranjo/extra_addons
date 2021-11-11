@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+    <record model="res.users" id="base.user_root">
+        <field name="name">InmerzoBot</field>
+    </record>
+
+    <record id="sh_backmate_theme_adv.sh_back_theme_config_rec" model="sh.back.theme.config.settings">
+        <field name="theme_color">color_2</field>
+        <field name="theme_style">style_1</field>
+        <field name="pre_theme_style">pre_color_2</field>
+        <field name="primary_color">#EF6112</field>
+        <field name="primary_hover">#EF6112</field>
+        <field name="primary_active">#EF6112</field>
+        <field name="gradient_color">#4F2499</field>
+        <field name="secondary_color">#E2E4E6</field>
+        <field name="secondary_hover">#E2E4E6</field>
+        <field name="secondary_active">#E2E4E6</field>
+        <field name="header_font_color">#74788D</field>
+        <field name="header_hover_color">#EF6112</field>
+        <field name="header_active_color">#EF6112</field>
+        <field name="h1_color">#495057</field>
+        <field name="h2_color">#495057</field>
+        <field name="h3_color">#495057</field>
+        <field name="h4_color">#495057</field>
+        <field name="h5_color">#495057</field>
+        <field name="h6_color">#495057</field>
+        <field name="p_color">#495057</field>
+        <field name="h1_size">28</field>
+        <field name="h2_size">17</field>
+        <field name="h3_size">18</field>
+        <field name="h4_size">13</field>
+        <field name="h5_size">13</field>
+        <field name="h6_size">12</field>
+        <field name="p_size">13</field>
+        <field name="body_background_type">bg_color</field>
+        <field name="body_background_color">#FFFFFF</field>
+        <field name="body_google_font_family">Muli</field>
+        <field name="is_used_google_font">False</field>
+        <field name="button_style">style_4</field>
+        <field name="button_style">style_4</field>
+        <field name="separator_style">style_4</field>
+        <field name="separator_color">#43A047</field>
+        <field name="sidebar_font_hover_background_color">#EF6112</field>
+        <field name="sidebar_is_show_nav_bar">True</field>
+        <field name="sidebar_collapse_style">collapsed</field>
+        <field name="loading_style">style_1</field>
+        <field name="progress_style">style_1</field>
+        <field name="progress_height">4px</field>
+        <field name="progress_color">#EF6112</field>
+        <field name="list_view_border">without_border</field>
+        <field name="list_view_hover_bg_color">#F2F2F2</field>
+        <field name="list_view_even_row_color">#FFFFFF</field>
+        <field name="list_view_odd_row_color">#FFFFFF</field>
+        <field name="login_page_style">style_2</field>
+        <field name="login_page_background_type">bg_color</field>
+        <field name="is_sticky_form">True</field>
+        <field name="is_sticky_chatter">True</field>
+        <field name="is_sticky_list">True</field>
+        <field name="is_sticky_list_inside_form">True</field>
+        <field name="modal_popup_style">style_1</field>
+        <field name="tab_style">horizontal</field>
+        <field name="tab_style_mobile">horizontal</field>
+        <field name="horizontal_tab_style">style_4</field>
+        <field name="vertical_tab_style">style_4</field>
+        <field name="form_element_style">style_8</field>
+        <field name="search_style">expanded</field>
+        <field name="breadcrumb_style">style_5</field>
+        <field name="chatter_position">sided</field>
+    </record>
+
+    <function model="ir.config_parameter" name="set_param" eval="('auth_signup.invitation_scope', 'b2b')"/>
+
+    <record id="update_translation_all_cron" model="ir.cron">
+        <field name="name">Update Translation All</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False" />
+        <field name="model_id" ref="backend_inmerzo.model_ir_translation"/>
+        <field name="code">model._update_translation_all()</field>
+        <field name="state">code</field>
+    </record>
+
+    <record id="update_user_group_cron" model="ir.cron">
+        <field name="name">Update User Group</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False" />
+        <field name="model_id" ref="backend_inmerzo.model_res_users"/>
+        <field name="code">model._update_user_group()</field>
+        <field name="state">code</field>
+    </record>
+
+    <record id="update_template_all_cron" model="ir.cron">
+        <field name="name">Update Template All</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False" />
+        <field name="model_id" ref="backend_inmerzo.model_mail_template"/>
+        <field name="code">model._update_template_all()</field>
+        <field name="state">code</field>
+    </record>
+
+    <record id="base.main_company" model="res.company">
+        <field name="name">inmerzo</field>
+        <field name="company_name_logo" type="base64" file="backend_inmerzo/static/src/img/logo.png"/>
+    </record>
+</odoo>
