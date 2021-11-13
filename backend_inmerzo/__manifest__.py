@@ -35,6 +35,7 @@
     'support': 'devtodoo@gmail.com',
     'depends': [
         'sh_backmate_theme_adv',
+        'digest'
     ],
     'data': [
         'data/data.xml',

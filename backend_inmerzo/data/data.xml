@@ -105,6 +105,8 @@
 
     <record id="base.main_company" model="res.company">
         <field name="name">inmerzo</field>
+        <field name="phone">000 00 00 00</field>
+        <field name="website">https://inmerzo.com</field>
         <field name="company_name_logo" type="base64" file="backend_inmerzo/static/src/img/logo.png"/>
         <field name="favicon" type="base64" file="backend_inmerzo/static/src/img/favicon.ico"/>
     </record>
@@ -127,5 +129,9 @@
         <field name="user">infoclientes@inmerzo.com</field>
         <field name="password">legrand1011e</field>
         <field name="state">done</field>
+    </record>
+
+    <record id="digest.ir_cron_digest_scheduler_action" model="ir.cron">
+        <field name="active" eval="False"/>
     </record>
 </odoo>
