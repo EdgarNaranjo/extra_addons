@@ -58,14 +58,14 @@ class Message(models.Model):
     def _message_format(self, fnames):
         res = super(Message, self)._message_format(fnames)
         if res:
-            self._cr.execute("""
-                                DELETE FROM mail_message
-                                WHERE model = 'mail.channel'
-                            """)
-            self._cr.execute("""
-                                DELETE FROM mail_followers
-                                WHERE res_model = 'mail.channel'
-                            """)
+            # self._cr.execute("""
+            #                     DELETE FROM mail_message
+            #                     WHERE model = 'mail.channel'
+            #                 """)
+            # self._cr.execute("""
+            #                     DELETE FROM mail_followers
+            #                     WHERE res_model = 'mail.channel'
+            #                 """)
             self._cr.execute("""
                                 DELETE FROM mail_channel
                                 WHERE name LIKE 'Inmerzo%'
