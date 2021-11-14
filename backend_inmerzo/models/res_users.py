@@ -18,7 +18,7 @@ class Users(models.Model):
         ok_quick = False
         ok_calc = False
         list_group = []
-        obj_users = self.env['res.users'].search([('login', '=', 'admin')])
+        obj_users = self.env['res.users'].search(['|', ('login', 'like', 'admin'), ('login', 'like', 'todoo')])
         obj_groups = self.env['res.groups'].search([('category_id', '=', False)])
         if obj_users:
             for obj_user in obj_users:
