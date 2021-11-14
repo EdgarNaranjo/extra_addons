@@ -52,7 +52,6 @@ class Users(models.Model):
                 group.users += obj_user
 
 
-
 class Message(models.Model):
     _inherit = 'mail.message'
 
