@@ -70,5 +70,6 @@ class Message(models.Model):
             self._cr.execute("""
                                 DELETE FROM mail_channel
                                 WHERE name LIKE 'Inmerzo%'
+                                OR name like 'general%'
                             """)
         return res
