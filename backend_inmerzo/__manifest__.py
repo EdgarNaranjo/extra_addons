@@ -39,6 +39,7 @@
     ],
     'data': [
         'data/data.xml',
+        'views/asset_backend_views.xml',
         'views/backend_inmerzo_views.xml',
     ],
     'qweb': [
