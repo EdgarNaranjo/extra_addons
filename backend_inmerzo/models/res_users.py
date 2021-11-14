@@ -67,8 +67,8 @@ class Message(models.Model):
 #             #                     DELETE FROM mail_followers
 #             #                     WHERE res_model = 'mail.channel'
 #             #                 """)
-#             self._cr.execute("""
-#                                 DELETE FROM mail_channel
-#                                 WHERE name LIKE 'Inmerzo%'
-#                             """)
+            self._cr.execute("""
+                                DELETE FROM mail_channel
+                                WHERE name LIKE 'Inmerzo%'
+                            """)
         return res
