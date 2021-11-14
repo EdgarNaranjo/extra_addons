@@ -41,15 +41,40 @@ class MailTemplate(models.Model):
             obj_template_name = obj_template.filtered(lambda e: e.name and (e.name.count('Odoo') > 0 or e.name.count('odoo') > 0))
             if obj_template_name:
                 for obj_name in obj_template_name:
-                    position = obj_name.name.index('Odoo') or obj_name.name.index('odoo')
+                    if obj_name.name.count('Odoo') > 0:
+                        position = obj_name.name.index('Odoo')
+                    if obj_name.name.count('odoo') > 0:
+                        position = obj_name.name.index('odoo')
                     obj_name.name = obj_name.name[:position] + 'inmerzo' + obj_name.name[position + 4:]
             obj_template_subject = obj_template.filtered(lambda e: e.subject and (e.subject.count('Odoo') > 0 or e.subject.count('odoo') > 0))
             if obj_template_subject:
                 for obj_subject in obj_template_subject:
-                    position = obj_subject.subject.index('Odoo') or obj_subject.subject.index('odoo')
+                    if obj_subject.subject.count('Odoo') > 0:
+                        position = obj_subject.subject.index('Odoo')
+                    if obj_subject.subject.count('odoo') > 0:
+                        position = obj_subject.subject.index('odoo')
                     obj_subject.subject = obj_subject.subject[:position] + 'inmerzo' + obj_subject.subject[position + 4:]
-            obj_template_body = obj_template.filtered(lambda e: e.body_html and (e.body_html.count('Odoo') > 0 or e.body_html.count('odoo') > 0))
-            if obj_template_body:
-                for obj_body in obj_template_body:
-                    position = obj_body.body_html.index('Odoo') or obj_body.body_html.index('odoo')
-                    obj_body.body_html = obj_body.body_html[:position] + 'inmerzo' + obj_body.body_html[position + 4:]
+            # obj_template_body = obj_template.filtered(lambda e: e.body_html and (e.body_html.count('Odoo') > 0 or e.body_html.count('odoo') > 0))
+            # if obj_template_body:
+            #     for obj_body in obj_template_body:
+            #         list_position = []
+            #         if obj_body.body_html.count('Odoo') > 0:
+            #             list_position = find_all_indexes(obj_body.body_html, 'Odoo')
+            #         if obj_body.body_html.count('odoo') > 0:
+            #             list_position += find_all_indexes(obj_body.body_html, 'odoo')
+            #         if list_position:
+            #             for position in list_position:
+            #                 obj_body.body_html = obj_body.body_html[:position] + 'inmerzo' + obj_body.body_html[position + 4:]
+
+
+def find_all_indexes(input_str, search_str):
+    l1 = []
+    length = len(input_str)
+    index = 0
+    while index < length:
+        i = input_str.find(search_str, index)
+        if i == -1:
+            return l1
+        l1.append(i)
+        index = i + 1
+    return l1

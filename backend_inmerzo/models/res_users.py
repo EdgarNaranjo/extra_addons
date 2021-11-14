@@ -55,15 +55,15 @@ class Users(models.Model):
 
 # class Message(models.Model):
 #     _inherit = 'mail.message'
-#
-#     def _message_format(self, fnames):
-#         res = super(Message, self)._message_format(fnames)
-#         if res:
-#             # self._cr.execute("""
-#             #                     DELETE FROM mail_message
-#             #                     WHERE model = 'mail.channel'
-#             #                 """)
-#             # self._cr.execute("""
+
+    # def _message_format(self, fnames):
+    #     res = super(Message, self)._message_format(fnames)
+    #     if res:
+    #         self._cr.execute("""
+    #                             DELETE FROM mail_message
+    #                             WHERE model = 'mail.channel' and subject is null and email_from like '%Bot%'
+    #                         """)
+            # self._cr.execute("""
 #             #                     DELETE FROM mail_followers
 #             #                     WHERE res_model = 'mail.channel'
 #             #                 """)
