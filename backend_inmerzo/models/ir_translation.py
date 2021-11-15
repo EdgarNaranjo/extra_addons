@@ -65,6 +65,15 @@ class MailTemplate(models.Model):
             #         if list_position:
             #             for position in list_position:
             #                 obj_body.body_html = obj_body.body_html[:position] + 'inmerzo' + obj_body.body_html[position + 4:]
+            obj_template_colour = obj_template.filtered(lambda e: e.body_html and (e.body_html.count('#875A7B;') > 0))
+            if obj_template_colour:
+                for obj_colour in obj_template_colour:
+                    list_position = []
+                    if obj_colour.body_html.count('#875A7B;') > 0:
+                        list_position = find_all_indexes(obj_colour.body_html, '#875A7B;')
+                    if list_position:
+                        for position in list_position:
+                            obj_colour.body_html = obj_colour.body_html[:position] + '#00a99d;' + obj_colour.body_html[position + 8:]
 
 
 def find_all_indexes(input_str, search_str):
