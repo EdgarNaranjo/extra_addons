@@ -17,7 +17,7 @@
 <!--							<img t-attf-src="/web/image?model=res.company&amp;field=logo&amp;id=#{widget.current_company}"-->
 <!--	 							id="company_logo" style="margin-left: 64px;height: 50px;width: auto;margin-right: 2px;margin-top:2px;"/>-->
                             <img class="img" t-attf-src="/web/image?model=res.company&amp;field=company_name_logo&amp;id=#{widget.current_company}"
-								style="margin-left: 64px;height: 50px;width: auto;margin-right: 2px;margin-top:2px;" id="company_logo" />
+								style="margin-left: 64px;height: 50px;width: auto;margin-right: 2px;margin-top:2px;" id="company_name_logo" />
 <!--				        	<span class="icon-top_hide" id="hide_top_bar" style="margin-left: 5px;margin-top: 0px;"/> -->
 <!--				        	<span class="icon-top_show" id="show_top_bar" style="margin-left: 5px;margin-top: 0px;"/> -->
 		        	
