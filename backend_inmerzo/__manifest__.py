@@ -35,7 +35,9 @@
     'support': 'devtodoo@gmail.com',
     'depends': [
         'sh_backmate_theme_adv',
-        'digest'
+        'digest',
+        'auth_signup',
+        'portal'
     ],
     'data': [
         'data/data.xml',

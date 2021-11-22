@@ -54,17 +54,17 @@ class MailTemplate(models.Model):
                     if obj_subject.subject.count('odoo') > 0:
                         position = obj_subject.subject.index('odoo')
                     obj_subject.subject = obj_subject.subject[:position] + 'inmerzo' + obj_subject.subject[position + 4:]
-            # obj_template_body = obj_template.filtered(lambda e: e.body_html and (e.body_html.count('Odoo') > 0 or e.body_html.count('odoo') > 0))
-            # if obj_template_body:
-            #     for obj_body in obj_template_body:
-            #         list_position = []
-            #         if obj_body.body_html.count('Odoo') > 0:
-            #             list_position = find_all_indexes(obj_body.body_html, 'Odoo')
-            #         if obj_body.body_html.count('odoo') > 0:
-            #             list_position += find_all_indexes(obj_body.body_html, 'odoo')
-            #         if list_position:
-            #             for position in list_position:
-            #                 obj_body.body_html = obj_body.body_html[:position] + 'inmerzo' + obj_body.body_html[position + 4:]
+            obj_template_body = obj_template.filtered(lambda e: e.body_html and (e.body_html.count('Odoo') > 0 or e.body_html.count('odoo') > 0))
+            if obj_template_body:
+                for obj_body in obj_template_body:
+                    list_position = []
+                    if obj_body.body_html.count('Odoo') > 0:
+                        list_position = find_all_indexes(obj_body.body_html, 'Odoo')
+                    if obj_body.body_html.count('odoo') > 0:
+                        list_position += find_all_indexes(obj_body.body_html, 'odoo')
+                    if list_position:
+                        for position in list_position:
+                            obj_body.body_html = obj_body.body_html[:position] + 'inmerzo' + obj_body.body_html[position + 4:]
             obj_template_colour = obj_template.filtered(lambda e: e.body_html and (e.body_html.count('#875A7B;') > 0))
             if obj_template_colour:
                 for obj_colour in obj_template_colour:
